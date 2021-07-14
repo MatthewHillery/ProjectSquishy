@@ -1,10 +1,4 @@
 import requests
-import sys
-
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtWidgets import QHBoxLayout
 
 from bs4 import BeautifulSoup
 
@@ -13,74 +7,20 @@ from python.model.CameraSettings import CameraSettings
 from python.model.ControllerSettings import ControllerSettings
 from python.model.DeadzoneSettings import DeadzoneSettings
 from python.model.Player import Player
-from python.widgets.ComboBox import ComboBox
-from python.widgets.Label import Label
-from python.widgets.TextBox import TextBox
 
 
-def main():
+def parse():
     # Parsing data
     player_dict = {}
+    set_default_player(player_dict)
     get_camera_settings(player_dict)
     get_deadzone_settings(player_dict)
     get_controller_settings(player_dict)
 
-    for key, value in player_dict.items():
-        print(vars(value))
-
-    #  UI set up
-    app = QApplication(sys.argv)
-    main_widget = QWidget()
-    main_widget.setGeometry(100, 100, 200, 50)
-    main_widget.setFixedSize(600, 900)
-    main_widget.setWindowTitle("Project Squishy")
-
-    main_layout = QVBoxLayout()
-
-    camera_layout = QVBoxLayout()
-    deadzone_layout = QVBoxLayout()
-    controller_layout = QVBoxLayout()
-    player_layout = QVBoxLayout()
-
-    top_layout = QHBoxLayout()
-    bottom_layout = QHBoxLayout()
-
-    player_list = ComboBox()
-    player_list.addItems(player_dict.keys())
-
-    player_layout.addWidget(player_list)
-    top_layout.addLayout(player_layout)
-
-    for cons in CAMERA_CONSTANTS:
-        top_layout.addLayout(create_layout(cons, camera_layout))
-
-    for cons in CONTROLLER_CONSTANTS:
-        bottom_layout.addLayout(create_layout(cons, controller_layout))
-
-    for cons in DEADZONE_CONSTANTS:
-        bottom_layout.addLayout(create_layout(cons, deadzone_layout))
-
-    main_layout.addLayout(top_layout)
-    main_layout.addLayout(bottom_layout)
-    main_widget.setLayout(main_layout)
-    main_widget.show()
-    sys.exit(app.exec_())
-
-
-def fill_fields(player):
-    print(player.currentText())
-
-
-def create_layout(cons, setting_layout):
-    layout = QHBoxLayout()
-    layout.setObjectName(cons.get(ID))
-    l = Label()
-    t = TextBox()
-    l.setText(cons.get(LABEL))
-    layout.addWidget(l)
-    layout.addWidget(t)
-    setting_layout.addLayout(layout)
-    return setting_layout
+    # for key, value in player_dict.items():
+    #     print(vars(value))
+    player_dict.pop("Player")
+    return player_dict
 
 
 def get_controller_settings(player_dict):
@@ -92,18 +32,16 @@ def get_controller_settings(player_dict):
         data = controller_player.contents
         try:
             player = data[0].contents[1].text.strip()
-            if player == "SquishyMuffinz":
-                i = 0
             if player is None:
                 continue
             controller = ControllerSettings(
-                data[2].contents[0].attrs.get('alt'),
-                data[3].contents[0].attrs.get('alt'),  # Can look at contents.len for airroll left or right
-                data[4].contents[0].attrs.get('alt'),
-                data[5].contents[0].attrs.get('alt'),
-                data[6].contents[0].attrs.get('alt'),
-                data[7].contents[0].attrs.get('alt'),
-                data[8].contents[0].attrs.get('alt')
+                str(data[2].contents[0].attrs.get('alt')).upper(),
+                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
+                str(data[4].contents[0].attrs.get('alt')).upper(),
+                str(data[5].contents[0].attrs.get('alt')).upper(),
+                str(data[6].contents[0].attrs.get('alt')).upper(),
+                str(data[7].contents[0].attrs.get('alt')).upper(),
+                str(data[8].contents[0].attrs.get('alt')).upper()
             )
 
             if player not in player_dict:
@@ -127,16 +65,13 @@ def get_deadzone_settings(player_dict):
     for deadzone_player in deadzone_raw:
         data = deadzone_player.text.split('\n')
         player = str(data[1]).split(' ')[0].strip()
-        if player == "SquishyMuffinz":
-            i = 0
 
         deadzone = DeadzoneSettings(
-            data[3],
-            data[5],
             data[7],
             data[9],
             data[11],
-            data[13]
+            data[13],
+            data[15],
         )
         if player not in player_dict:
             p = Player(player, data[3], None, None, deadzone)
@@ -156,6 +91,7 @@ def get_camera_settings(player_dict):
     for camera_player in camera_raw:
         data = camera_player.text.split('\n')
         player = data[1].strip()
+        print(player)
         cam = CameraSettings(
             data[5],
             data[7],
@@ -179,5 +115,9 @@ def get_camera_settings(player_dict):
     print(len(player_dict))
 
 
-if __name__ == '__main__':
-    main()
+def set_default_player(player_dict):
+    player_dict.update({PLAYER_COMBO_BOX_DEFAULT:
+                        Player(PLAYER_COMBO_BOX_DEFAULT, "N/A",
+                               ControllerSettings(POWERSLIDE_DEFAULT_VALUE.upper(), AIR_ROLL_DEFAULT_VALUE.upper(), AIR_ROLL_LEFT_DEFAULT_VALUE.upper(), AIR_ROLL_RIGHT_DEFAULT_VALUE.upper(), BOOST_DEFAULT_VALUE.upper(), JUMP_DEFAULT_VALUE.upper(), BALL_CAM_DEFAULT_VALUE.upper(), BRAKE_DEFAULT_VALUE.upper(), THROTTLE_DEFAULT_VALUE.upper()),
+                               CameraSettings(CAMERA_SHAKE_DEFAULT_VALUE, FOV_DEFAULT_VALUE, HEIGHT_DEFAULT_VALUE, ANGLE_DEFAULT_VALUE, DISTANCE_DEFAULT_VALUE, STIFFNESS_DEFAULT_VALUE, SWIVEL_SPEED_DEFAULT_VALUE, TRANSITION_SPEED_DEFAULT_VALUE, BALL_CAMERA_DEFAULT_VALUE, "N/A"),
+                               DeadzoneSettings(DEADZONE_DEFAULT_VALUE, DODGE_DEADZONE_DEFAULT_VALUE, AERIAL_SENSITIVITY_DEFAULT_VALUE, STEERING_SENSITIVITY_DEFAULT_VALUE, "N/A"))})

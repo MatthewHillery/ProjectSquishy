@@ -1,17 +1,25 @@
 from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtGui import QFont
+from python.Constants import *
 
 
 class ComboBox(QComboBox):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, frame, name, q_rect):
+        super().__init__(frame)
+        self.setGeometry(q_rect)
         font = QFont()
-        font.setFamily("Ariel")
-        font.setPointSize(12)
+        font.setFamily(FONT)
+        font.setPointSize(FONT_SIZE)
         self.setFont(font)
-        self.setFixedWidth(150)
-        # self.activated.connect(self.do_something)
-
-    def do_something(self):
-        # fill_fields()
-        print(self.currentText())
+        self.setObjectName(name)
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")
+        self.addItem("")

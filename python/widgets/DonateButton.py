@@ -1,17 +1,21 @@
-from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QFont
 from python.Constants import *
 
 
-class TextBox(QLineEdit):
+class DonateButton(QPushButton):
     def __init__(self, frame, name, q_rect):
         super().__init__(frame)
-        self.setEnabled(False)
         self.setGeometry(q_rect)
         font = QFont()
         font.setFamily(FONT)
         font.setPointSize(FONT_SIZE)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setUnderline(False)
+        font.setWeight(75)
         self.setFont(font)
-        self.setReadOnly(False)
-        self.setClearButtonEnabled(False)
+        self.setAutoFillBackground(False)
+        self.setStyleSheet("color: red;")
+        self.setShortcut("")
         self.setObjectName(name)
