@@ -10,7 +10,11 @@ from PyQt5.QtCore import QMetaObject
 from PyQt5.QtCore import QCoreApplication
 
 from python.Constants import *
-from python.utils import PlayerDataParser
+from python.model.CameraSettings import CameraSettings
+from python.model.ControllerSettings import ControllerSettings
+from python.model.DeadzoneSettings import DeadzoneSettings
+from python.model.Player import Player
+from python.utils import PlayerDataParser, PlayerDataImporter
 from python.widgets.Button import Button
 from python.widgets.CheckBox import Checkbox
 from python.widgets.ComboBox import ComboBox
@@ -160,11 +164,12 @@ class MainWindow(QMainWindow):
         self.donate_button = DonateButton(self.button_frame, DONATE_BUTTON_LABEL_ID, QRect(20, 10, 81, 31))
         self.defaults_button = Button(self.button_frame, DEFAULTS_BUTTON_LABEL_ID, QRect(120, 10, 131, 31))
         self.reset_button = Button(self.button_frame, RESET_BUTTON_LABEL_ID, QRect(270, 10, 131, 31))
-        self.apply_button = Button(self.button_frame, APPLY_BUTTON_LABEL_ID, QRect(420, 10, 131, 31))
+        self.import_button = Button(self.button_frame, IMPORT_BUTTON_LABEL_ID, QRect(420, 10, 131, 31))
 
         # UI Button Frame - button handlers
         self.defaults_button.clicked.connect(self.handle_defaults_button)
         self.reset_button.clicked.connect(self.handle_reset_button)
+        self.import_button.clicked.connect(self.handle_import_button)
 
         self.setCentralWidget(self.central_widget)
 
@@ -179,6 +184,42 @@ class MainWindow(QMainWindow):
     def handle_reset_button(self):
         print("Resetting settings back to selected players")
         self.fill_fields()
+
+    def handle_import_button(self):
+        print("Extracting chosen settings into a player object")
+        temp_player = self.create_temp_player()
+        print("Importing chosen settings to in-game config")
+        print(vars(temp_player.controller_settings))
+        print(vars(temp_player.camera_settings))
+        print(vars(temp_player.deadzone_settings))
+        PlayerDataImporter.import_settings(temp_player)
+
+    def create_temp_player(self):
+        return Player("Temp", NOT_AVAILABLE,
+                      ControllerSettings(self.powerslide_combo_box.currentText(),
+                                         self.air_roll_combo_box.currentText(),
+                                         self.air_roll_left_combo_box.currentText(),
+                                         self.air_roll_right_combo_box.currentText(),
+                                         self.boost_combo_box.currentText(),
+                                         self.jump_combo_box.currentText(),
+                                         self.ball_cam_combo_box.currentText(),
+                                         self.brake_combo_box.currentText(),
+                                         self.throttle_combo_box.currentText()),
+                      CameraSettings("Yes" if self.camera_shake_checkbox.isChecked() else "No",
+                                     self.fov_spin_box.value(),
+                                     self.height_spin_box.value(),
+                                     self.angle_spin_box.value(),
+                                     self.distance_spin_box.value(),
+                                     self.stiffness_spin_box.value(),
+                                     self.swivel_speed_spin_box.value(),
+                                     self.transition_speed_spin_box.value(),
+                                     self.ball_camera_combo_box.currentText(),
+                                     self.last_updated_text_box_2.text()),
+                      DeadzoneSettings(self.deadzone_spin_box.value(),
+                                       self.dodge_deadzone_spin_box.value(),
+                                       self.aerial_sensitivity_spin_box.value(),
+                                       self.steering_sensitivity_spin_box.value(),
+                                       self.last_updated_text_box.text()))
 
     def fill_fields(self):
         player = self.player_dict.get(str(self.player_combo_box.currentText()))
@@ -390,7 +431,7 @@ class MainWindow(QMainWindow):
         self.ball_cam_combo_box.setItemText(9, _translate(MAIN_WINDOW_LABEL, PLAYSTATION_L2))
         self.ball_cam_combo_box.setItemText(10, _translate(MAIN_WINDOW_LABEL, UNMAPPED))
         self.reset_button.setText(_translate(MAIN_WINDOW_LABEL, RESET_BUTTON_LABEL))
-        self.apply_button.setText(_translate(MAIN_WINDOW_LABEL, APPLY_BUTTON_LABEL))
+        self.import_button.setText(_translate(MAIN_WINDOW_LABEL, IMPORT_BUTTON_LABEL))
         self.defaults_button.setText(_translate(MAIN_WINDOW_LABEL, DEFAULTS_BUTTON_LABEL))
         self.donate_button.setText(_translate(MAIN_WINDOW_LABEL, DONATE_BUTTON_LABEL))
         self.deadzone_label.setText(_translate(MAIN_WINDOW_LABEL, DEADZONE_LABEL))

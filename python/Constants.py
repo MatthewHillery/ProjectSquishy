@@ -121,12 +121,12 @@ BUTTON_FRAME_ID = "buttom_frame"
 DONATE_BUTTON_LABEL_ID = "donate_button"
 DEFAULTS_BUTTON_LABEL_ID = "defaults_button"
 RESET_BUTTON_LABEL_ID = "reset_button"
-APPLY_BUTTON_LABEL_ID ="apply_button"
+IMPORT_BUTTON_LABEL_ID = "import_button"
 
 DONATE_BUTTON_LABEL = "Donate"
 DEFAULTS_BUTTON_LABEL = "Defaults"
 RESET_BUTTON_LABEL = "Reset"
-APPLY_BUTTON_LABEL = "Apply"
+IMPORT_BUTTON_LABEL = "Import"
 
 
 # Controller buttons
