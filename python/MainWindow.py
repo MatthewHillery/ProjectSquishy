@@ -187,7 +187,7 @@ class MainWindow(QMainWindow):
         if player.team is not None and str(player.team) != "":
             self.team_text_box.setText(player.team)
         else:
-            self.team_text_box.setText('N/A')
+            self.team_text_box.setText(NOT_AVAILABLE)
 
         camera_settings = player.camera_settings
         if camera_settings is not None:
@@ -197,7 +197,7 @@ class MainWindow(QMainWindow):
                 camera_settings.swivel_speed, camera_settings.transition_speed,
                 camera_settings.ball_camera, camera_settings.last_updated)
         else:
-            self.fill_camera_settings_fields(CAMERA_SHAKE_DEFAULT_VALUE, FOV_DEFAULT_VALUE, HEIGHT_DEFAULT_VALUE, ANGLE_DEFAULT_VALUE, DISTANCE_DEFAULT_VALUE, STIFFNESS_DEFAULT_VALUE, SWIVEL_SPEED_DEFAULT_VALUE, TRANSITION_SPEED_DEFAULT_VALUE, BALL_CAMERA_DEFAULT_VALUE, "N/A")
+            self.fill_camera_settings_fields(CAMERA_SHAKE_DEFAULT_VALUE, FOV_DEFAULT_VALUE, HEIGHT_DEFAULT_VALUE, ANGLE_DEFAULT_VALUE, DISTANCE_DEFAULT_VALUE, STIFFNESS_DEFAULT_VALUE, SWIVEL_SPEED_DEFAULT_VALUE, TRANSITION_SPEED_DEFAULT_VALUE, BALL_CAMERA_DEFAULT_VALUE, NOT_AVAILABLE)
 
         controller_settings = player.controller_settings
         if controller_settings is not None:
@@ -223,7 +223,7 @@ class MainWindow(QMainWindow):
                 deadzone_settings.steering_sensitivity,
                 deadzone_settings.last_updated)
         else:
-            self.fill_deadzone_settings_fields(DEADZONE_DEFAULT_VALUE, DODGE_DEADZONE_DEFAULT_VALUE, AERIAL_SENSITIVITY_DEFAULT_VALUE, STEERING_SENSITIVITY_DEFAULT_VALUE, "N/A")
+            self.fill_deadzone_settings_fields(DEADZONE_DEFAULT_VALUE, DODGE_DEADZONE_DEFAULT_VALUE, AERIAL_SENSITIVITY_DEFAULT_VALUE, STEERING_SENSITIVITY_DEFAULT_VALUE, NOT_AVAILABLE)
 
     def fill_deadzone_settings_fields(self, deadzone, dodge_deadzone, aerial_sensitivity,
                                       steering_sensitivity, last_updated):
@@ -400,7 +400,7 @@ class MainWindow(QMainWindow):
         self.dodge_deadzone_label.setText(_translate(MAIN_WINDOW_LABEL, DODGE_DEADZONE_LABEL))
         # self.player_combo_box.setItemText(0, _translate(MAIN_WINDOW_LABEL, PLAYER_COMBO_BOX_DEFAULT))
         self.player_combo_box.addItems(self.player_dict.keys())
-        self.team_text_box.setText(_translate(MAIN_WINDOW_LABEL, "N/A"))
+        self.team_text_box.setText(_translate(MAIN_WINDOW_LABEL, NOT_AVAILABLE))
         self.team_label.setText(_translate(MAIN_WINDOW_LABEL, TEAM_LABEL))
         self.camera_shake_label.setText(_translate(MAIN_WINDOW_LABEL, CAMERA_SHAKE_LABEL))
         self.fov_label.setText(_translate(MAIN_WINDOW_LABEL, FOV_LABEL))

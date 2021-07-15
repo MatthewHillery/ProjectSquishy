@@ -8,12 +8,12 @@ DEADZONE_URL = os.getenv('DEADZONE_URL')
 
 
 # Global config
-APPLICATION_NAME = "Project Squishy - hillnet"
+APPLICATION_NAME = "Supersonic - hillnet"
 FONT = "Arial"
 FONT_SIZE = 12
 MAIN_WINDOW_LABEL = "MainWindow"
 MAIN_WINDOW_STYLE_SHEET = "background-color: rgb(236, 236, 236)"
-
+NOT_AVAILABLE = "N/A"
 
 # Player
 PLAYER_FRAME_ID = "player_frame"
