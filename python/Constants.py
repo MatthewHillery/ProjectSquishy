@@ -6,6 +6,14 @@ CAMERA_URL = os.getenv('CAMERA_URL')
 CONTROL_URL = os.getenv('CONTROL_URL')
 DEADZONE_URL = os.getenv('DEADZONE_URL')
 
+##############################################################################
+# UPDATE WITH THE PATH TO YOUR DefaultInput.ini FILE IN YOUR CONFIG DIRECTORY
+
+CONFIG_PATH = "D:\\mystuff\games\\rocketleague\\TAGame\\Config"
+
+# UPDATE WITH THE PATH TO YOUR CONFIG DIRECTORY
+##############################################################################
+
 
 # Global config
 APPLICATION_NAME = "Supersonic - hillnet"
@@ -14,6 +22,7 @@ FONT_SIZE = 12
 MAIN_WINDOW_LABEL = "MainWindow"
 MAIN_WINDOW_STYLE_SHEET = "background-color: rgb(236, 236, 236)"
 NOT_AVAILABLE = "N/A"
+
 
 # Player
 PLAYER_FRAME_ID = "player_frame"
@@ -116,6 +125,30 @@ BALL_CAMERA_COMBO_BOX_ID = "ball_camera_combo_box"
 LAST_UPDATED_2_TEXT_BOX_ID = "last_updated_text_box_2"
 
 
+# Donate window
+DONATE_FRAME_ID = "donate_frame"
+ETH_LABEL_ID = "eth_label"
+ETH_ADDRESS_ID = "eth_address"
+BITCOIN_LABEL_ID = "bitcoin_label"
+BITCOIN_ADDRESS_ID = "bitcoin_address"
+PAYPAL_LABEL_ID = "paypal_label"
+PAYPAL_ADDRESS_ID = "paypal_address"
+TITLE_LABEL_ID = "title_label"
+THANK_YOU_LABEL_ID = "thank_you_label"
+
+ETH_LABEL = "ETH"
+BITCOIN_LABEL = "Bitcoin"
+PAYPAL_LABEL = "Paypal"
+DONATION_TITLE = "Tip Jar"
+THANK_YOU_LABEL = "Thank you for supporting this project."
+
+BITCOIN_ADDRESS = "3PnKwttJq9C4XTesAViYqogyggYXfj9NoP"
+ETH_ADDRESS = "0x7E9244b5AB90D7831ee14756cD99DD61d29ADFc2"
+PAYPAL_ADDRESS = "<a href='https://www.paypal.com/donate/?business=49FPBL7KZVMV6&no_recurring=0&item_name=Supersonic+support&currency_code=USD'>https://www.paypal.com/donate</a>"
+
+DONATION_EXIT_BUTTON_CSS = "background-color: rgb(227, 83, 34); color: white;"
+DONATION_EXIT_BUTTON_ID = "exit_button"
+
 # Button
 BUTTON_FRAME_ID = "buttom_frame"
 DONATE_BUTTON_LABEL_ID = "donate_button"
@@ -155,6 +188,7 @@ XBOX_LT = "LT"
 UNMAPPED = "Unmapped"
 TOGGLE = "Toggle"
 HOLD = "Hold"
+
 
 # Defaults
 POWERSLIDE_DEFAULT_VALUE = PLAYSTATION_L1

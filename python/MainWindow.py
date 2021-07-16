@@ -10,6 +10,7 @@ from PyQt5.QtCore import QMetaObject
 from PyQt5.QtCore import QCoreApplication
 
 from python.Constants import *
+from python.DonateFrame import DonateFrame
 from python.model.CameraSettings import CameraSettings
 from python.model.ControllerSettings import ControllerSettings
 from python.model.DeadzoneSettings import DeadzoneSettings
@@ -39,12 +40,10 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(QSize(610, 680))
         self.setMaximumSize(QSize(610, 680))
         self.setAutoFillBackground(False)
-        self.setStyleSheet("")
         self.setToolButtonStyle(Qt.ToolButtonFollowStyle)
         self.setTabShape(QTabWidget.Rounded)
         self.central_widget = QWidget(self)
         self.central_widget.setAutoFillBackground(True)
-        self.central_widget.setStyleSheet("")
         self.central_widget.setObjectName("centralwidget")
         self.frame = QFrame(self.central_widget)
         self.frame.setGeometry(QRect(0, -1, 610, 680))
@@ -57,7 +56,6 @@ class MainWindow(QMainWindow):
         self.player_frame = QFrame(self.frame)
         self.player_frame.setGeometry(QRect(10, 11, 291, 151))
         self.player_frame.setAutoFillBackground(False)
-        self.player_frame.setStyleSheet("")
         self.player_frame.setFrameShape(QFrame.Panel)
         self.player_frame.setFrameShadow(QFrame.Raised)
         self.player_frame.setObjectName(PLAYER_FRAME_ID)
@@ -102,7 +100,6 @@ class MainWindow(QMainWindow):
         self.deadzone_frame = QFrame(self.frame)
         self.deadzone_frame.setGeometry(QRect(310, 11, 291, 211))
         self.deadzone_frame.setAutoFillBackground(False)
-        self.deadzone_frame.setStyleSheet("")
         self.deadzone_frame.setFrameShape(QFrame.Panel)
         self.deadzone_frame.setFrameShadow(QFrame.Raised)
         self.deadzone_frame.setObjectName(DEADZONE_FRAME_ID)
@@ -170,11 +167,33 @@ class MainWindow(QMainWindow):
         self.defaults_button.clicked.connect(self.handle_defaults_button)
         self.reset_button.clicked.connect(self.handle_reset_button)
         self.import_button.clicked.connect(self.handle_import_button)
+        self.donate_button.clicked.connect(self.handle_donate_button)
+
+        # Donate window
+        self.donate_main_frame = QFrame(self.central_widget)
+        self.donate_main_frame.setGeometry(QRect(0, -1, 610, 680))
+        self.donate_main_frame.setStyleSheet(MAIN_WINDOW_STYLE_SHEET)
+        self.donate_main_frame.setFrameShape(QFrame.StyledPanel)
+        self.donate_main_frame.setFrameShadow(QFrame.Raised)
+        self.donate_main_frame.setObjectName("donate_main_frame")
+        self.donate_frame = DonateFrame(self.donate_main_frame)
+        self.donate_frame.exit_button.clicked.connect(self.handle_donate_exit_button)
+        self.donate_main_frame.close()
 
         self.setCentralWidget(self.central_widget)
 
         self.retranslate_ui()
         QMetaObject.connectSlotsByName(self)
+
+    def handle_donate_exit_button(self):
+        print("Closing donate window")
+        self.donate_main_frame.close()
+        self.frame.show()
+
+    def handle_donate_button(self):
+        print("Displaying donate window")
+        self.frame.close()
+        self.donate_main_frame.show()
 
     def handle_defaults_button(self):
         print("Resetting all settings to default")
@@ -439,7 +458,7 @@ class MainWindow(QMainWindow):
         self.last_updated_label.setText(_translate(MAIN_WINDOW_LABEL, LAST_UPDATED_LABEL))
         self.steering_sensitivity_label.setText(_translate(MAIN_WINDOW_LABEL, STEERING_SENSITIVITY_LABEL))
         self.dodge_deadzone_label.setText(_translate(MAIN_WINDOW_LABEL, DODGE_DEADZONE_LABEL))
-        # self.player_combo_box.setItemText(0, _translate(MAIN_WINDOW_LABEL, PLAYER_COMBO_BOX_DEFAULT))
+        self.player_combo_box.setItemText(0, _translate(MAIN_WINDOW_LABEL, PLAYER_COMBO_BOX_DEFAULT))
         self.player_combo_box.addItems(self.player_dict.keys())
         self.team_text_box.setText(_translate(MAIN_WINDOW_LABEL, NOT_AVAILABLE))
         self.team_label.setText(_translate(MAIN_WINDOW_LABEL, TEAM_LABEL))
