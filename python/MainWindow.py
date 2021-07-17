@@ -58,6 +58,7 @@ class MainWindow(QMainWindow):
         self.player_frame.setAutoFillBackground(False)
         self.player_frame.setFrameShape(QFrame.Panel)
         self.player_frame.setFrameShadow(QFrame.Raised)
+        self.player_frame.setLineWidth(3)
         self.player_frame.setObjectName(PLAYER_FRAME_ID)
 
         # UI Player Frame - labels & data widgets
@@ -72,6 +73,7 @@ class MainWindow(QMainWindow):
         self.controller_frame.setAutoFillBackground(False)
         self.controller_frame.setFrameShape(QFrame.Panel)
         self.controller_frame.setFrameShadow(QFrame.Raised)
+        self.controller_frame.setLineWidth(3)
         self.controller_frame.setObjectName(CONTROLLER_FRAME_ID)
 
         # UI Controller Frame - labels
@@ -102,6 +104,7 @@ class MainWindow(QMainWindow):
         self.deadzone_frame.setAutoFillBackground(False)
         self.deadzone_frame.setFrameShape(QFrame.Panel)
         self.deadzone_frame.setFrameShadow(QFrame.Raised)
+        self.deadzone_frame.setLineWidth(3)
         self.deadzone_frame.setObjectName(DEADZONE_FRAME_ID)
 
         # UI Deadzone Frame - labels
@@ -124,6 +127,7 @@ class MainWindow(QMainWindow):
         self.camera_frame.setAutoFillBackground(False)
         self.camera_frame.setFrameShape(QFrame.Panel)
         self.camera_frame.setFrameShadow(QFrame.Raised)
+        self.camera_frame.setLineWidth(3)
         self.camera_frame.setObjectName(CAMERA_FRAME_ID)
 
         # UI Camera Frame - labels
@@ -155,6 +159,7 @@ class MainWindow(QMainWindow):
         self.button_frame.setGeometry(QRect(20, 610, 571, 51))
         self.button_frame.setFrameShape(QFrame.Panel)
         self.button_frame.setFrameShadow(QFrame.Raised)
+        self.button_frame.setLineWidth(3)
         self.button_frame.setObjectName(BUTTON_FRAME_ID)
 
         # UI Button Frame - buttons

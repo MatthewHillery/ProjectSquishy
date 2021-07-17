@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QCompleter
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QRect
 from PyQt5.QtCore import QSize
@@ -17,3 +18,7 @@ class PlayerComboBox(QComboBox):
         self.setFont(font)
         self.setLayoutDirection(Qt.LeftToRight)
         self.setObjectName("player_combo_box")
+        self.setEditable(True)
+        self.setInsertPolicy(QComboBox.NoInsert)
+        self.completer().setCompletionMode(QCompleter.InlineCompletion)
+        self.lineEdit().setFont(font)

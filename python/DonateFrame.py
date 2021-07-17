@@ -16,6 +16,7 @@ class DonateFrame(QFrame):
         self.setGeometry(QRect(140, 195, 330, 290))
         self.setAutoFillBackground(False)
         self.setFrameShape(QFrame.Box)
+        self.setLineWidth(2)
         self.setFrameShadow(QFrame.Raised)
         self.setObjectName(DONATE_FRAME_ID)
 
