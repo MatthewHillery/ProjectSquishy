@@ -37,6 +37,8 @@ def get_controller_settings(player_dict):
             controller = ControllerSettings(
                 str(data[2].contents[0].attrs.get('alt')).upper(),
                 str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
+                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
+                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
                 str(data[4].contents[0].attrs.get('alt')).upper(),
                 str(data[5].contents[0].attrs.get('alt')).upper(),
                 str(data[6].contents[0].attrs.get('alt')).upper(),
