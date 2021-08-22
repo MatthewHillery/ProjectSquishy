@@ -1,10 +1,7 @@
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-CAMERA_URL = os.getenv('CAMERA_URL')
-CONTROL_URL = os.getenv('CONTROL_URL')
-DEADZONE_URL = os.getenv('DEADZONE_URL')
+CAMERA_URL = 'https://liquipedia.net/rocketleague/List_of_player_camera_settings'
+CONTROL_URL = 'https://liquipedia.net/rocketleague/List_of_player_control_settings'
+DEADZONE_URL = 'https://liquipedia.net/rocketleague/List_of_player_deadzone_settings'
 
 ##############################################################################
 # UPDATE WITH THE PATH TO YOUR DefaultInput.ini FILE IN YOUR CONFIG DIRECTORY
