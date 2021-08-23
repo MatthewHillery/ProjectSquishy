@@ -19,8 +19,35 @@ def parse():
 
     # for key, value in player_dict.items():
     #     print(vars(value))
+
     player_dict.pop("Player")
+
+    print("Finished parsing " + str(len(player_dict)) + " players settings.")
     return player_dict
+
+
+def get_air_rolls(data):
+    air_roll = str(data[3].contents[0].attrs.get('alt')).upper()
+    air_roll_left = ""
+    air_roll_right = ""
+
+    if len(data[3].contents) == 1:
+        return air_roll, air_roll_left, air_roll_right
+
+    if len(data[3].contents) == 4:
+        if '/' in data[3].contents[2]:
+            air_roll_right = str(data[3].contents[2].attrs.get('alt')).upper()
+        else:
+            air_roll_left = str(data[3].contents[2].attrs.get('alt')).upper()
+        return air_roll, air_roll_left, air_roll_right
+
+    if len(data[3].contents) == 6:
+        air_roll_left = str(data[3].contents[2].attrs.get('alt')).upper()
+        air_roll_right = str(data[3].contents[4].attrs.get('alt')).upper()
+        return air_roll, air_roll_left, air_roll_right
+
+    print("Error parsing air rolls.")
+    return air_roll, air_roll_left, air_roll_right
 
 
 def get_controller_settings(player_dict):
@@ -34,17 +61,16 @@ def get_controller_settings(player_dict):
             player = data[0].contents[1].text.strip()
             if player is None:
                 continue
-            controller = ControllerSettings(
-                str(data[2].contents[0].attrs.get('alt')).upper(),
-                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
-                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
-                str(data[3].contents[0].attrs.get('alt')).upper(),  # Can look at contents.len for airroll left or right
-                str(data[4].contents[0].attrs.get('alt')).upper(),
-                str(data[5].contents[0].attrs.get('alt')).upper(),
-                str(data[6].contents[0].attrs.get('alt')).upper(),
-                str(data[7].contents[0].attrs.get('alt')).upper(),
-                str(data[8].contents[0].attrs.get('alt')).upper()
-            )
+
+            powerslide = str(data[2].contents[0].attrs.get('alt')).upper()
+            air_roll, air_roll_left, air_roll_right = get_air_rolls(data)
+            boost = str(data[4].contents[0].attrs.get('alt')).upper()
+            jump = str(data[5].contents[0].attrs.get('alt')).upper()
+            ball_cam = str(data[6].contents[0].attrs.get('alt')).upper()
+            brake = str(data[7].contents[0].attrs.get('alt')).upper()
+            throttle = str(data[8].contents[0].attrs.get('alt')).upper()
+
+            controller = ControllerSettings(powerslide, air_roll, air_roll_left, air_roll_right, boost, jump, ball_cam, brake, throttle)
 
             if player not in player_dict:
                 p = Player(player, data[1].contents[0].strip().text, controller, None, None)
@@ -55,8 +81,6 @@ def get_controller_settings(player_dict):
                 player_dict.update({player: player_ob})
         except:
             pass
-
-    print(len(player_dict))
 
 
 def get_deadzone_settings(player_dict):
@@ -82,7 +106,6 @@ def get_deadzone_settings(player_dict):
             player_ob = player_dict.get(player)
             player_ob.deadzone_settings = deadzone
             player_dict.update({player: player_ob})
-    print(len(player_dict))
 
 
 def get_camera_settings(player_dict):
@@ -93,7 +116,6 @@ def get_camera_settings(player_dict):
     for camera_player in camera_raw:
         data = camera_player.text.split('\n')
         player = data[1].strip()
-        print(player)
         cam = CameraSettings(
             data[5],
             data[7],
@@ -113,8 +135,6 @@ def get_camera_settings(player_dict):
             player_ob = player_dict.get(player)
             player_ob.camera_settings = cam
             player_dict.update({player: player_ob})
-
-    print(len(player_dict))
 
 
 def set_default_player(player_dict):

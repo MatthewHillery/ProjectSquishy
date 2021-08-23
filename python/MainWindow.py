@@ -256,31 +256,36 @@ class MainWindow(QMainWindow):
 
         camera_settings = player.camera_settings
         if camera_settings is not None:
+            print("Found " + player.name + "'s camera settings.")
             self.fill_camera_settings_fields(
                 camera_settings.camera_shake, camera_settings.fov, camera_settings.height,
                 camera_settings.angle, camera_settings.distance, camera_settings.stiffness,
                 camera_settings.swivel_speed, camera_settings.transition_speed,
                 camera_settings.ball_camera, camera_settings.last_updated)
         else:
+            print("Could not find " + player.name + "'s camera settings, using defaults")
             self.fill_camera_settings_fields(CAMERA_SHAKE_DEFAULT_VALUE, FOV_DEFAULT_VALUE, HEIGHT_DEFAULT_VALUE, ANGLE_DEFAULT_VALUE, DISTANCE_DEFAULT_VALUE, STIFFNESS_DEFAULT_VALUE, SWIVEL_SPEED_DEFAULT_VALUE, TRANSITION_SPEED_DEFAULT_VALUE, BALL_CAMERA_DEFAULT_VALUE, NOT_AVAILABLE)
 
         controller_settings = player.controller_settings
         if controller_settings is not None:
+            print("Found " + player.name + "'s controller settings.")
             self.fill_controller_settings_fields(
                 self.convert_control(controller_settings.powerslide),
                 self.convert_control(controller_settings.air_roll),
-                self.convert_control(controller_settings.air_roll),
-                self.convert_control(controller_settings.air_roll),
+                self.convert_control(controller_settings.air_roll_left),
+                self.convert_control(controller_settings.air_roll_right),
                 self.convert_control(controller_settings.boost),
                 self.convert_control(controller_settings.jump),
                 self.convert_control(controller_settings.ball_cam),
                 self.convert_control(controller_settings.brake),
                 self.convert_control(controller_settings.throttle))
         else:
+            print("Could not find " + player.name + "'s controller settings, using defaults")
             self.fill_controller_settings_fields(POWERSLIDE_DEFAULT_VALUE, AIR_ROLL_DEFAULT_VALUE, AIR_ROLL_LEFT_DEFAULT_VALUE, AIR_ROLL_RIGHT_DEFAULT_VALUE, BOOST_DEFAULT_VALUE, JUMP_DEFAULT_VALUE, BALL_CAM_DEFAULT_VALUE, BRAKE_DEFAULT_VALUE, THROTTLE_DEFAULT_VALUE)
 
         deadzone_settings = player.deadzone_settings
         if deadzone_settings is not None:
+            print("Found " + player.name + "'s deadzone settings.")
             self.fill_deadzone_settings_fields(
                 deadzone_settings.deadzone,
                 deadzone_settings.dodge_deadzone,
@@ -288,6 +293,7 @@ class MainWindow(QMainWindow):
                 deadzone_settings.steering_sensitivity,
                 deadzone_settings.last_updated)
         else:
+            print("Could not find " + player.name + "'s deadzone settings, using defaults")
             self.fill_deadzone_settings_fields(DEADZONE_DEFAULT_VALUE, DODGE_DEADZONE_DEFAULT_VALUE, AERIAL_SENSITIVITY_DEFAULT_VALUE, STEERING_SENSITIVITY_DEFAULT_VALUE, NOT_AVAILABLE)
 
     def fill_deadzone_settings_fields(self, deadzone, dodge_deadzone, aerial_sensitivity,
